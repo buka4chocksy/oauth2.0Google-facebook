@@ -39,7 +39,9 @@ app.use(cookieSession({
   }
 app.use('/api', rootRouter);
 
-app.get("/", (req,res)=> res.send("you are not logged in"));
+app.get('/' , (req,res)=>{
+    res.render("index.ejs")
+})
 app.get("/failed", (req,res)=> res.send("you have failed to login"));
 app.get("/good", isLoggedin,(req,res)=> res.send("login was successful"));
 
