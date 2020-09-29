@@ -4,18 +4,9 @@ const tokenGen = require('../middleware/tokenGenerator')
 var GoogleStrategy = require('passport-google-oauth20').Strategy;
 
         passport.serializeUser(function(user, done) {
-            console.log('serialize: ', user)
             done(null, user);
           });
-          
-        //   passport.deserializeUser(function(id, done) {
-        //     User.findById(id, function(err, user) {
-        //       done(err, user);
-        //     });
-        //   });
-        
         passport.deserializeUser(function(user, done) {
-            console.log('deserialize :', user)
               done(null, user);
           });
         
@@ -25,7 +16,6 @@ var GoogleStrategy = require('passport-google-oauth20').Strategy;
             callbackURL: "http://localhost:8080/google/callback"
           },
         function (accessToken, refreshToken, profile, done) {
-            console.log(profile._json , 'lolllll')
               const details= {
                 authId:profile._json.sub,
                 firstname:profile._json.family_name,
@@ -37,7 +27,6 @@ var GoogleStrategy = require('passport-google-oauth20').Strategy;
                   if(found){
                let result = await  tokenGen.generateToken(found)
                const data = {token:result , data:found , message:'authentication was successfull'}
-               console.log(data , 'hhmmmmm')
 
                     return done(err , data);
                   }else{
@@ -51,15 +40,4 @@ var GoogleStrategy = require('passport-google-oauth20').Strategy;
               })
           }
         ));
-        
-        
-        // passport.use(new GoogleStrategy({
-        //     clientID: '81564891976-inpoudlp1l8cqk1pjqo6gdlggmv4ttb9.apps.googleusercontent.com',
-        //     clientSecret: 'hbTSUrWs-guwRrnsFiUZdqNb',
-        //     callbackURL: "http://localhost:8080/google/callback"
-        //   },
-        //   function(accessToken, refreshToken, profile, done) {
-        //       console.log('see details , here',profile )
-        //         return done(null, profile);
-        //   }
-        // ));
+
